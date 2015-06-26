@@ -1,9 +1,10 @@
 <ion-view view-title="Contacts">
   <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
+      <ion-list>
+          <ion-item ng-repeat="contact in contacts">
+              <h1>{{ contact.Country }}</h1>
+              <p>{{ contact.Name }}</p>
+          </ion-item>
+      </ion-list>
   </ion-content>
 </ion-view>

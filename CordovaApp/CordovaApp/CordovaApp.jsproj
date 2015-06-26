@@ -907,6 +907,7 @@
     <Content Include="scripts\ionic.min.js" />
     <Content Include="scripts\version.json" />
     <Content Include="templates\chat-detail.html" />
+    <Content Include="templates\login.html" />
     <Content Include="templates\tab-contact.html" />
     <Content Include="templates\tab-chats.html" />
     <Content Include="templates\tab-prof.html" />
@@ -918,6 +919,7 @@
     <Content Include="merges\windows\scripts\platformOverrides.js" />
     <Content Include="merges\windows\scripts\winstore-jscompat.js" />
     <Folder Include="merges\wp8\" />
+    <Folder Include="plugins\" />
     <Folder Include="res\icons\android\" />
     <Folder Include="res\icons\ios\" />
     <Folder Include="res\icons\wp8\" />
