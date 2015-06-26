@@ -1,9 +1,9 @@
 <ion-view view-title="Contacts">
   <ion-content>
       <ion-list>
-          <ion-item ng-repeat="contact in contacts">
-              <h1>{{ contact.Country }}</h1>
-              <p>{{ contact.Name }}</p>
+          <ion-item ng-repeat="data in user">
+              <h1>{{ data.username }}</h1>
+              <p>{{ data.tagline }}</p>
           </ion-item>
       </ion-list>
   </ion-content>
