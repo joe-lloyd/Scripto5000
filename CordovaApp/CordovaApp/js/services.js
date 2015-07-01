@@ -1,15 +1,29 @@
 angular.module('starter.services', [])
 
-.service('LoginService', function ($q) {
+.service('LoginService', function ($q, $http) {
     return {
         loginUser: function (name, pw) {
             var deferred = $q.defer();
             var promise = deferred.promise;
-
-            if (name == 'user' && pw == 'secret') {
-                deferred.resolve('Welcome ' + name + '!');
-            } else {
-                deferred.reject('Wrong credentials.');
+            var user_data = $http.get("http://130.211.90.249:3000/login");
+            user_data.then(function (result) {
+                var user = result.data;
+                log(user);
+            })
+            function log(user) {
+                var i;
+                var isloggedin = false;
+                for (i = 0; i < user.length; i++) {
+                    if (name == user[i].username && pw == user[i].password) {
+                        isloggedin = true;
+                        break;
+                    } 
+                }
+                if (isloggedin) {
+                    deferred.resolve('Welcome ' + name + '!');
+                } else {
+                    deferred.reject('Wrong credentials.');
+                }
             }
             promise.success = function (fn) {
                 promise.then(fn);
