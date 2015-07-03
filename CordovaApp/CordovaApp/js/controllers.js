@@ -1,8 +1,8 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCookies'])
 
 .controller('ProfCtrl', function ($scope) { })
 
-.controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state) {
+.controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state, $cookies) {
     $scope.data = {};
 
     $scope.login = function () {
