@@ -28,19 +28,6 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-// note for gathering passwords
-.controller('Password',function($scope,$http,$interval){
-    checkpass();
-    $interval(function(){
-        checkpass();
-    },300);
-    function checkpass(){
-        $http.get('http://130.211.90.249:3000/load').success(function(data){
-            $scope.username=data;
-        });
-    };
-})
-
 .controller('ContactCtrl', function($scope, $http) {
     $http.get("http://130.211.90.249:3000/load")
       .success(function (data) { $scope.user = data; });
