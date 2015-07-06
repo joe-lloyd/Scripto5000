@@ -1,6 +1,6 @@
 angular.module('starter.services', ['ngCookies'])
 
-.service('LoginService', function ($q, $http, $cookies) {
+.service('LoginService', function ($q, $http, $cookies, $rootScope) {
     return {
         loginUser: function (name, pw) {
             var deferred = $q.defer();
@@ -8,16 +8,20 @@ angular.module('starter.services', ['ngCookies'])
             var user_data = $http.get("http://130.211.90.249:3000/login");
             user_data.then(function (result) {
                 var user = result.data;
-                $cookies.put('session', log(user));
+                //$cookies.put('session', log(user));
+                log(user);
+                var wat = $rootScope.session;
+                console.log(wat);
             })
             function log(user) {
                 var i;
-                var id = -1;
+                //var id = -1;
                 var isloggedin = false;
                 for (i = 0; i < user.length; i++) {
                     if (name == user[i].username && pw == user[i].password) {
                         isloggedin = true;
                         id = user[i].iduser;
+                        $rootScope.session = id;
                         break;
                     } 
                 }
@@ -26,7 +30,7 @@ angular.module('starter.services', ['ngCookies'])
                 } else {
                     deferred.reject('Wrong credentials.');
                 }
-                return id;
+                //return id;
             }
             promise.success = function (fn) {
                 promise.then(fn);
@@ -53,6 +57,21 @@ angular.module('starter.services', ['ngCookies'])
     return {
         myProf: function () {
             return accounts;
+        }
+    };
+})
+
+.factory('User', function ($http, $rootScope) {
+    var user = $http.get('http://130.211.90.249:3000/prof', {
+        params: { user_id: $rootScope.session }
+    });
+    //user.then(function (result) {
+    //    var theUser = result.data;
+    //    console.log(theUser);
+    //})
+    return {
+        get: function () {
+            return user;
         }
     };
 })

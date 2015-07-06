@@ -1,13 +1,17 @@
 angular.module('starter.controllers', ['ngCookies'])
 
-.controller('ProfCtrl', function ($scope) { })
+.controller('ProfCtrl', function (User, $scope, $stateParams) {
+    $scope.user = User.get($stateParams.id);
+})
 
-.controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state, $cookies) {
+.controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state, $cookies, $rootScope) {
     $scope.data = {};
 
     $scope.login = function () {
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function (data) {
-            $state.go('tab.prof');
+            //var wat = $rootScope.session;
+            //console.log(wat);
+            $state.go('tab.prof', { "id": $rootScope.session });
         }).error(function (data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
