@@ -1,36 +1,38 @@
 <ion-view view-title="Profile">
-    <ion-content class="padding">
-        <div class="list card">
-            <div class="item item-divider">
-                Profile Picture
-            </div>
-            <div class="item item-body">
-                <div class="row">
-                    <a class="item item-thumbnail" href="#">
-                        <img src="http://theatrework.org/sites/default/files/styles/medium/public/images/BLANK_PROFILE.png?itok=0uGTwTji" />
-                    </a>
+    <ion-content>
+        <ion-item ng-repeat="user in user">
+            <div class="list card">
+                <div class="item item-divider">
+                    Profile Picture
+                </div>
+                <div class="item item-body">
+                    <div class="row">
+                        <a class="item item-thumbnail" href="#">
+                            <img src="http://theatrework.org/sites/default/files/styles/medium/public/images/BLANK_PROFILE.png?itok=0uGTwTji" />
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="list card">
-            <div class="item item-divider">
-                Name
+            <div class="list card">
+                <div class="item item-divider">
+                    Name
+                </div>
+                <div class="item item-body">
+                    <p>
+                        {{user.username}}
+                    </p>
+                </div>
             </div>
-            <div class="item item-body">
-                <p>
-                    {{user.username}}
-                </p>
+            <div class="list card">
+                <div class="item item-divider">
+                    Tag Line
+                </div>
+                <div class="item item-body">
+                    <p>
+                        {{user.tagline}}
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="list card">
-            <div class="item item-divider">
-                Tag Line
-            </div>
-            <div class="item item-body">
-                <p>
-                    {{user.tagline}}
-                </p>
-            </div>
-        </div>
+        </ion-item>
     </ion-content>
 </ion-view>

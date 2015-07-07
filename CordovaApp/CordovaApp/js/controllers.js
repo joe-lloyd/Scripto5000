@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['ngCookies'])
 
 .controller('ProfCtrl', function (User, $scope, $stateParams) {
-    $scope.user = User.get($stateParams.id);
+    $scope.user = User.get();
 })
 
 .controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state, $cookies, $rootScope) {
@@ -9,8 +9,8 @@ angular.module('starter.controllers', ['ngCookies'])
 
     $scope.login = function () {
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function (data) {
-            //var wat = $rootScope.session;
-            //console.log(wat);
+            var wat = $rootScope.session;
+            console.log(wat);
             $state.go('tab.prof', { "id": $rootScope.session });
         }).error(function (data) {
             var alertPopup = $ionicPopup.alert({
