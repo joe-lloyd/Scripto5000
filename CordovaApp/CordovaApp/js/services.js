@@ -64,6 +64,17 @@ angular.module('starter.services', ['ngCookies'])
 
 .factory('User', function ($http, $rootScope) {
 
+    var user = [];
+
+    return {
+        getUser: function(){
+            return $http.get('http://130.211.90.249:3000/prof', { params: {user_id:$rootScope.session}}).success(function(response){
+                user = response;
+                return user[0];
+            });
+        }
+    }
+
     //var user_data = $http.get('http://130.211.90.249:3000/prof', {
     //    params: { user_id: $rootScope.session }
     //});
@@ -72,23 +83,23 @@ angular.module('starter.services', ['ngCookies'])
     //    console.log(user);
     //})
 
-    var user = [{
-        iduser: 1,
-        username: "joe",
-        phone: "0870578707",
-        tagline: "yo im joe",
-        password: "Yun0",
-        email: "joe.lloyd.22.24@gmail.com",
-        birthday: "0000-00-00 00:00:00",
-        gender: "male",
-        pic: null
-    }]
+    //var user = [{
+    //    iduser: 1,
+    //    username: "joe",
+    //    phone: "0870578707",
+    //    tagline: "yo im joe",
+    //    password: "Yun0",
+    //    email: "joe.lloyd.22.24@gmail.com",
+    //    birthday: "0000-00-00 00:00:00",
+    //    gender: "male",
+    //    pic: null
+    //}]
 
-    return {
-        get: function () {
-            return user;
-        }
-    };
+    //return {
+    //    get: function () {
+    //        return user;
+    //    }
+    //};
 })
 
 .factory('Chats', function() {

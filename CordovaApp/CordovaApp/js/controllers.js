@@ -1,9 +1,5 @@
 angular.module('starter.controllers', ['ngCookies'])
 
-.controller('ProfCtrl', function (User, $scope, $stateParams) {
-    $scope.user = User.get();
-})
-
 .controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state, $cookies, $rootScope) {
     $scope.data = {};
 
@@ -11,7 +7,7 @@ angular.module('starter.controllers', ['ngCookies'])
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function (data) {
             var wat = $rootScope.session;
             console.log(wat);
-            $state.go('tab.prof', { "id": $rootScope.session });
+            $state.go('tab.prof');
         }).error(function (data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
@@ -26,6 +22,13 @@ angular.module('starter.controllers', ['ngCookies'])
   $scope.remove = function(chat) {
     Chats.remove(chat);
   }
+})
+
+.controller('ProfCtrl', function ($scope, $http, $rootScope) {
+
+    $http.get('http://130.211.90.249:3000/prof', { params: { user_id: $rootScope.session } }).success(function (response) {
+        $scope.durp = response;
+    });
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
