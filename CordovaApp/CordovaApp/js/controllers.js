@@ -27,7 +27,7 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('ProfCtrl', function ($scope, $http, $rootScope) {
 
     $http.get('http://130.211.90.249:3000/prof', { params: { user_id: $rootScope.session } }).success(function (response) {
-        $scope.durp = response;
+        $scope.user = response;
     });
 })
 
@@ -35,7 +35,8 @@ angular.module('starter.controllers', ['ngCookies'])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('ContactCtrl', function($scope, $http) {
-    $http.get("http://130.211.90.249:3000/load")
-      .success(function (data) { $scope.user = data; });
+.controller('ContactCtrl', function($scope, $http, $rootScope) {
+    $http.get('http://130.211.90.249:3000/friends', { params: { user_id: $rootScope.session } }).success(function (response) {
+        $scope.friends = response;
+    });
 });

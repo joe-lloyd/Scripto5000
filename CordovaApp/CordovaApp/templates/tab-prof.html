@@ -1,6 +1,6 @@
 <ion-view view-title="Profile">
     <ion-content>
-        <ion-item ng-repeat="durp in durp">
+        <ion-item ng-repeat="user in user">
             <div class="list card">
                 <div class="item item-divider">
                     Profile Picture
@@ -8,7 +8,7 @@
                 <div class="item item-body">
                     <div class="row">
                         <a class="item item-thumbnail" href="#">
-                            <img src="http://theatrework.org/sites/default/files/styles/medium/public/images/BLANK_PROFILE.png?itok=0uGTwTji" />
+                            <img ng-src="{{user.pic}}" alt-src="http://theatrework.org/sites/default/files/styles/medium/public/images/BLANK_PROFILE.png?itok=0uGTwTji" onerror="this.src = $(this).attr('altSrc')">
                         </a>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="item item-body">
                     <p>
-                        {{durp.username}}
+                        {{user.username}}
                     </p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="item item-body">
                     <p>
-                        {{durp.tagline}}
+                        {{user.tagline}}
                     </p>
                 </div>
             </div>
