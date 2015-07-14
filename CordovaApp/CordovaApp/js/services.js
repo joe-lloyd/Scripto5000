@@ -8,15 +8,11 @@ angular.module('starter.services', ['ngCookies'])
             var user_data = $http.get("http://130.211.90.249:3000/login");
             user_data.then(function (result) {
                 var user = result.data;
-                //conosle.log(user);
-                //$cookies.put('session', log(user));
                 log(user);
-                //var wat = $rootScope.session;
-                //console.log(wat);
+                console.log($rootScope.session);
             })
             function log(user) {
                 var i;
-                //var id = -1;
                 var isloggedin = false;
                 for (i = 0; i < user.length; i++) {
                     if (name == user[i].username && pw == user[i].password) {
@@ -31,7 +27,6 @@ angular.module('starter.services', ['ngCookies'])
                 } else {
                     deferred.reject('Wrong credentials.');
                 }
-                //return id;
             }
             promise.success = function (fn) {
                 promise.then(fn);
@@ -46,67 +41,47 @@ angular.module('starter.services', ['ngCookies'])
     }
 })
 
-.factory('Account', function () {
-
-    //Account test data
-
-    var accounts = [{
-        id: 0,
-        name: 'Joe Lloyd',
-        face: '..\img\blank_profile.png'
-    }];
+// Socket factory to recive the io and wrap it in AngularJS
+.factory('socket', function ($rootScope) {
+    var socket = io.connect('http://130.211.90.249:3000');
     return {
-        myProf: function () {
-            return accounts;
+        on: function (eventName, callback) {
+            socket.on(eventName, function () {  
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        emit: function (eventName, data, callback) {
+            socket.emit(eventName, data, function () {
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            })
         }
     };
 })
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory('User', function ($http, $rootScope) {
+    return {
+        get: function () {
+            return $http.get('http://130.211.90.249:3000/prof', { params: { user_id: $rootScope.session } })
+        }
+    };
+})
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Joe Blogs',
-    lastText: 'this is some test text',
-    face: 'http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png'
-  }, {
-    id: 1,
-    name: 'Luke skywalker',
-    lastText: 'this is some test text',
-    face: 'http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png'
-  },{
-    id: 2,
-    name: 'Yuno Gaesi',
-    lastText: 'this is some test text',
-    face: 'http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png'
-  }, {
-    id: 3,
-    name: 'Light Yagami',
-    lastText: 'this is some test text',
-    face: 'http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'this is some test text',
-    face: 'http://www.clker.com/cliparts/5/7/4/8/13099629981030824019profile.svg.med.png'
-  }];
+.factory('Chats', function ($http, $rootScope, $stateParams) {
 
   return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
+      all: function () {
+          return $http.get('http://130.211.90.249:3000/chats', { params: { user_id: $rootScope.session } })
+      },
+      get: function () {
+          return $http.get('http://130.211.90.249:3000/chat', { params: { user_id: $rootScope.session, chat_id: $stateParams.idchat } })
+      }      
   };
 });
