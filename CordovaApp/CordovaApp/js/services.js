@@ -43,7 +43,7 @@ angular.module('starter.services', ['ngCookies'])
 
 // Socket factory to recive the io and wrap it in AngularJS
 .factory('socket', function ($rootScope) {
-    var socket = io.connect('http://130.211.90.249:3000');
+    //var socket = io.connect('http://130.211.90.249:3000');
     return {
         on: function (eventName, callback) {
             socket.on(eventName, function () {  
@@ -62,14 +62,33 @@ angular.module('starter.services', ['ngCookies'])
                     }
                 });
             })
+        },
+        secretSend: function (eventName, data, id, callback) {
+            socket.broadcast.to(id).emit(eventName, data, function () {
+                var args = arguments;
+                $rootScope.$apply(function () {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            })
         }
     };
 })
+ 
 
 .factory('User', function ($http, $rootScope) {
     return {
         get: function () {
             return $http.get('http://130.211.90.249:3000/prof', { params: { user_id: $rootScope.session } })
+        }
+    };
+})
+
+.factory('NewAccount', function ($http) {
+    return {
+        create: function (name, pass, tag, phone) {
+            return $http.get('http://130.211.90.249:3000/signup', { params: { name: name, pass: pass, tag: tag, phone: phone } })
         }
     };
 })

@@ -3,6 +3,10 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $state, $cookies, $rootScope) {
     $scope.data = {};
 
+    $scope.create = function () {
+        $state.go('signup');
+    }
+
     $scope.login = function () {
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function (data) {
             var wat = $rootScope.session;
@@ -15,6 +19,28 @@ angular.module('starter.controllers', ['ngCookies'])
             });
         });
     }
+})
+
+.controller('SignUpCtrl', function ($http, $scope, $state) {
+    $scope.data = {};
+
+    $scope.create = function () {
+        console.log($scope.data.username);
+        $http.get('http://130.211.90.249:3000/signup', { params: { name: $scope.data.username, pass: $scope.data.password, tag: $scope.data.tagLine, phone: $scope.data.phone } });
+        console.log($scope.data.username);
+        $state.go('login');
+    }
+
+    //$scope.create = function () {
+    //    $state.go('login');
+    //}
+
+    //$scope.create = function () {
+    //    NewAccount.create($scope.data.username, $scope.data.password, $scope.data.tagLine, $scope.data.phone).success(function (data) {
+    //        console.log($scope.data.username);
+    //        $state.go('login');
+    //    });
+    //}
 })
 
 .controller('ProfCtrl', function ($scope, $http, $rootScope) {
@@ -43,12 +69,12 @@ angular.module('starter.controllers', ['ngCookies'])
     })
     var socket = io.connect('http://130.211.90.249:3001');
     $('form').submit(function () {
-        socket.emit('chat message', $('#m').val());
+        socket.secretSend('chat message', $('#m').val(), $scope.chat.idchat);
         $('#m').val('');
         return false;
     });
     socket.on('chat message', function (msg) {
-        $('#messages').append($scope.user.username).append($('<p>').text(msg));
+        $('#messages').append($scope.chat.username).append($('<p>').text(msg));
     });
 })
 
