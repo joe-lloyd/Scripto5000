@@ -43,7 +43,6 @@ angular.module('starter.services', ['ngCookies'])
 
 // Socket factory to recive the io and wrap it in AngularJS
 .factory('socket', function ($rootScope) {
-    //var socket = io.connect('http://130.211.90.249:3000');
     return {
         on: function (eventName, callback) {
             socket.on(eventName, function () {  

@@ -1,0 +1,27 @@
+﻿<ion-view view-title="Edit Account">
+    <ion-content>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <span class="input-label">Username</span>
+                <input type="text" placeholder="Username" ng-model="user.username">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Picture url</span>
+                <input type="text" placeholder="Picture url" ng-model="user.pic">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="text" placeholder="Password" ng-model="user.password">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Tag Line</span>
+                <input type="text" placeholder="Tag Line" ng-model="user.tagline">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Phone Number</span>
+                <input type="text" placeholder="Phone Number" ng-model="user.phone">
+            </label>
+            <button class="button button-block button-calm" ng-click="edit()">Update Account</button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -83,6 +83,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'SignUpCtrl'
       })
 
+      .state('edit', {
+          url: '/edit',
+          templateUrl: 'templates/edit.html',
+          controller: 'EditCtrl'
+      })
+
   .state('tab.contact', {
     url: '/contact',
     views: {

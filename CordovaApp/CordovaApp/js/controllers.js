@@ -30,24 +30,34 @@ angular.module('starter.controllers', ['ngCookies'])
         console.log($scope.data.username);
         $state.go('login');
     }
-
-    //$scope.create = function () {
-    //    $state.go('login');
-    //}
-
-    //$scope.create = function () {
-    //    NewAccount.create($scope.data.username, $scope.data.password, $scope.data.tagLine, $scope.data.phone).success(function (data) {
-    //        console.log($scope.data.username);
-    //        $state.go('login');
-    //    });
-    //}
 })
 
-.controller('ProfCtrl', function ($scope, $http, $rootScope) {
+.controller('EditCtrl', function ($http, $scope, $rootScope, $state) {
+    
+    $http.get('http://130.211.90.249:3000/prof', { params: { user_id: $rootScope.session } }).success(function (response) {
+        $scope.user = response[0];
+    });
+    
+    $scope.edit = function () {
+        $http.get('http://130.211.90.249:3000/edit', { params: { name: $scope.user.username, pass: $scope.user.password, tag: $scope.user.tagline, phone: $scope.user.phone, pic: $scope.user.pic, user_id: $rootScope.session } });
+        $state.go('tab.prof');
+    }
+})
+
+.controller('ProfCtrl', function ($scope, $http, $rootScope, $state) {
 
     $http.get('http://130.211.90.249:3000/prof', { params: { user_id: $rootScope.session } }).success(function (response) {
         $scope.user = response;
     });
+
+    $scope.delete = function () {
+        $http.get('http://130.211.90.249:3000/delete', { params: { user_id: $rootScope.session } });
+        $state.go('login');
+    }
+
+    $scope.edit = function () {
+        $state.go('edit');
+    }
 })
 
 .controller('ChatsCtrl', function ($scope, Chats) {
@@ -55,9 +65,6 @@ angular.module('starter.controllers', ['ngCookies'])
     Chats.all().success(function (response) {
         $scope.chats = response;
     })
-    //$scope.remove = function(chat) {
-    //  Chats.remove(chat);
-    //}
 })
 
 .controller('ChatDetailCtrl', function ($scope, Chats, socket, User) {

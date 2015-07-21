@@ -907,6 +907,7 @@
     <Content Include="scripts\ionic.min.js" />
     <Content Include="scripts\version.json" />
     <Content Include="templates\chat-detail.html" />
+    <Content Include="templates\edit.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\signup.html" />
     <Content Include="templates\tab-contact.html" />

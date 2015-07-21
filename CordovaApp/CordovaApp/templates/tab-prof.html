@@ -1,6 +1,8 @@
 <ion-view view-title="Profile">
     <ion-content>
         <ion-item ng-repeat="user in user">
+            <button class="button button-block button-calm" ng-click="edit()">Edit Account</button>
+            <button class="button button-block button-calm" ng-click="delete()">Delete Account</button>
             <div class="list card">
                 <div class="item item-divider">
                     Profile Picture
