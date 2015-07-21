@@ -43,9 +43,10 @@ angular.module('starter.services', ['ngCookies'])
 
 // Socket factory to recive the io and wrap it in AngularJS
 .factory('socket', function ($rootScope) {
+    var socket = io.connect('http://130.211.90.249:3000');
     return {
         on: function (eventName, callback) {
-            socket.on(eventName, function () {  
+            socket.on(eventName, function () {
                 var args = arguments;
                 $rootScope.$apply(function () {
                     callback.apply(socket, args);
@@ -54,16 +55,6 @@ angular.module('starter.services', ['ngCookies'])
         },
         emit: function (eventName, data, callback) {
             socket.emit(eventName, data, function () {
-                var args = arguments;
-                $rootScope.$apply(function () {
-                    if (callback) {
-                        callback.apply(socket, args);
-                    }
-                });
-            })
-        },
-        secretSend: function (eventName, data, id, callback) {
-            socket.broadcast.to(id).emit(eventName, data, function () {
                 var args = arguments;
                 $rootScope.$apply(function () {
                     if (callback) {
@@ -90,6 +81,17 @@ angular.module('starter.services', ['ngCookies'])
             return $http.get('http://130.211.90.249:3000/signup', { params: { name: name, pass: pass, tag: tag, phone: phone } })
         }
     };
+})
+
+.factory('FindFriend', function ($http, $rootScope) {
+    return {
+        find: function (phone) {
+            return $http.get('http://130.211.90.249:3000/findFriend', { params: {phone:phone}})
+        },
+        add: function (id) {
+            return $http.get('http://130.211.90.249:3000/addFriend', { params: {friendid:id, user_id: $rootScope.session} })
+        }
+    }
 })
 
 .factory('Chats', function ($http, $rootScope, $stateParams) {

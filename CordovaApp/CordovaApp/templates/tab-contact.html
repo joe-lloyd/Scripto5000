@@ -1,5 +1,13 @@
 <ion-view view-title="Contacts">
   <ion-content>
+      <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+              <input type="text" placeholder="Add friends by number" ng-model="friend.phone">
+          </label>
+          <button class="button button-small button-calm" ng-click="find()">
+              Find
+          </button>
+      </div>
       <ion-list>
           <ion-item ng-repeat="data in friends">
               <h1>{{ data.username }}</h1>

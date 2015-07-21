@@ -76,17 +76,37 @@ angular.module('starter.controllers', ['ngCookies'])
     })
     var socket = io.connect('http://130.211.90.249:3001');
     $('form').submit(function () {
-        socket.secretSend('chat message', $('#m').val(), $scope.chat.idchat);
+        socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
     });
     socket.on('chat message', function (msg) {
-        $('#messages').append($scope.chat.username).append($('<p>').text(msg));
+        $('#messages').append($scope.user.username).append($('<p>').text(msg));
     });
 })
 
-.controller('ContactCtrl', function($scope, $http, $rootScope) {
+.controller('ContactCtrl', function ($scope, $http, $rootScope, $ionicPopup, FindFriend) {
     $http.get('http://130.211.90.249:3000/friends', { params: { user_id: $rootScope.session } }).success(function (response) {
         $scope.friends = response;
     });
+
+    $scope.friend = {};
+
+    $scope.find = function () {
+        FindFriend.find($scope.friend.phone).success(function (response) {
+            $scope.friend = response[0];
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Add Friend',
+                template: '<p>Are you sure you want to Add <b> {{friend.username}} </b>as a friend</p>',
+                scope: $scope
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    console.log('You are sure');
+                } else {
+                    console.log('You are not sure');
+                }
+            });
+        })
+    };
 });
