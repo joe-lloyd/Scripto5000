@@ -85,8 +85,8 @@ angular.module('starter.controllers', ['ngCookies'])
     });
 })
 
-.controller('ContactCtrl', function ($scope, $http, $rootScope, $ionicPopup, FindFriend) {
-    $http.get('http://130.211.90.249:3000/friends', { params: { user_id: $rootScope.session } }).success(function (response) {
+.controller('ContactCtrl', function ($scope, $http, $rootScope, $ionicPopup, FindFriend, Contacts, Chats) {
+    Contacts.all().success(function (response) {
         $scope.friends = response;
     });
 
@@ -103,10 +103,19 @@ angular.module('starter.controllers', ['ngCookies'])
             confirmPopup.then(function (res) {
                 if (res) {
                     console.log('You are sure');
+                    FindFriend.add($scope.friend.iduser).success(function (reponse) { })
                 } else {
                     console.log('You are not sure');
                 }
             });
         })
     };
+
+    $scope.remove = function (id) {
+        FindFriend.deleteFriend(id).success(function (response) { })
+    };
+
+    $scope.addChat = function (id) {
+        Chats.add(id).success(function (response) { })
+    }
 });

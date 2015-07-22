@@ -90,8 +90,19 @@ angular.module('starter.services', ['ngCookies'])
         },
         add: function (id) {
             return $http.get('http://130.211.90.249:3000/addFriend', { params: {friendid:id, user_id: $rootScope.session} })
+        },
+        deleteFriend: function (id) {
+            return $http.get('http://130.211.90.249:3000/deleteFriend', {params:{idfriends: id}})
         }
     }
+})
+
+.factory('Contacts', function ($http, $rootScope, $stateParams) {
+    return {
+        all: function () {
+            return $http.get('http://130.211.90.249:3000/friends', { params: { user_id: $rootScope.session } })
+        }
+    };
 })
 
 .factory('Chats', function ($http, $rootScope, $stateParams) {
@@ -102,6 +113,9 @@ angular.module('starter.services', ['ngCookies'])
       },
       get: function () {
           return $http.get('http://130.211.90.249:3000/chat', { params: { user_id: $rootScope.session, chat_id: $stateParams.idchat } })
-      }      
+      },
+      add: function (id) {
+          return $http.get('http://130.211.90.249:3000/newChat', { params: {idfriends:id}})
+      }
   };
 });
