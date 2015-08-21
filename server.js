@@ -212,6 +212,21 @@ app.get('/deleteFriend',function(req,res){
   });
 });
 
+app.get('/newChat',function(req,res){
+  console.log("/newChat hit");
+  var fid = req.param('idfriends');
+  connection.query("INSERT INTO chat (friendshipid) VALUES (?);", [fid],function(err,rows){
+    if(err)
+    {
+      console.log("Problem with MySQL"+err);
+    }
+    else
+    {
+      console.log('query successful');
+    }
+  });
+});
+
 app.get('/load',function(req,res){
   console.log("/load hit");
   connection.query("SELECT * from user",function(err,rows){
