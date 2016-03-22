@@ -21,7 +21,8 @@ Other Tech
 - Samsung Gallexy Core Prime
 - Ripple Emmulator
 - VIM on Google Cloud to build API
-- 
+ 
+
 #Note
 The server js file at the root was made as a restful api that talks to a mySQL database.
 
